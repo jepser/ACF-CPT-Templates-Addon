@@ -7,10 +7,22 @@ Tags:              acf, advanced custom fields, custom post type template
 Author URI:        http://royalestudios.com
 Author:            Royal Estudios
 Requires at least: 3.5
-Tested up to:      3.7.1
-Stable tag:        0.2
-Version:           0.2
+Tested up to:      3.5.1
+Stable tag:        0.1
+Version:           0.1
 
 == Description ==
 
-This is an Advanced Custom Fields addon from Elliot and Custom Posts Templates. This plugin add Custom Template for any public post type in your theme and also (the most important) adds this conditional area in the ACF visible area.
+This is an Advanced Custom Fields addon from Elliot and 
+
+== Installation ==
+
+== Upgrade Notice ==
+
+== Screenshots ==
+
+== Changelog ==
+
+== Frequently Asked Questions ==
+
+== Donations ==

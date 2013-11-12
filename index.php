@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields: Custom Post Type Template Rules
 Plugin URI: http://jepserbernardino.com/labs/acf-cptt
 Description: Adds show rule for Custom Post Type plugin. Requeries Advanced Custom Fields plugin and Custom Post Templates plugin.
-Version: 0.1
+Version: 0.2
 Author: Royal Estudios
 Author URI: http://royalestudios.com
 License: GPL2
@@ -24,6 +24,8 @@ class WP_cpttr{
 		add_filter('acf/location/rule_match/cpt_template', array(&$this, 'acf_location_rules_match_cpt_template'), 10, 3);
 		add_filter('acf/location/rule_values/cpt_template', array(&$this, 'acf_add_cpt_list'));
 		add_filter('acf/location/rule_types', array(&$this, 'acf_location_rules_types'));
+
+		add_action('admin_enqueue_scripts', array(&$this, 'acf_cpt_javascript'));
 		
 	}
 	
@@ -43,35 +45,34 @@ class WP_cpttr{
         <?php
     }
 	
-	//adds templating for every Custom Post Type
+	//adding templating for every Custom Post Type
 	function add_cpt_post_types( $post_types ) {
 		$pts = get_post_types(array('public' => true, '_builtin' => false));
 		$post_types = array_merge($post_types, $pts);
-		//$post_types[] = 'producto';
 		return $post_types;
 	}
 	
+	//adding in location options
 	function acf_location_rules_types( $choices ){
-		$choices['Post']['cpt_template'] = 'Post Type Template';
+		$choices['Post']['cpt_template'] = __('Post Type Template','acf-cpt');
 	 
 		return $choices;
 	}
 	
-	
-	
+	//
 	function acf_add_cpt_list($choices){
 		
 		$ctheme = wp_get_theme();
 		$ctheme->get_files( 'php', 1 );
-		$choises = array();
+		$choices = array();
 		$files = (array) $ctheme->get_files( 'php', 1 );
 		foreach ( $files as $file => $full_path ) {
 			$headers = get_file_data( $full_path, array( 'Template Name Posts' => 'Template Name Posts' ) );
 			if ( empty( $headers['Template Name Posts'] ) )
 				continue;
-			$choises[ $file ] = $headers['Template Name Posts'];
+			$choices[ $file ] = $headers['Template Name Posts'];
 		}
-		return $choises;
+		return $choices;
 	}
 
 	
@@ -93,6 +94,10 @@ class WP_cpttr{
 		}
 	 
 		return $match;
+	}
+
+	function acf_cpt_javascript(){
+		wp_enqueue_script('acf_cpt', plugin_dir_url( __FILE__ ) . '/scripts/acf_cpt.js', array('jquery'), '0.2');
 	}
 	
 	function add_action ($action, $function = '', $priority = 10, $accepted_args = 1) {
