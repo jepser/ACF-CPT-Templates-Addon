@@ -15,7 +15,7 @@ class WP_cpttr{
 		//register_deactivation_hook(__FILE__, array(&$this, 'deactivate'));
 		
 		include_once( ABSPATH . 'wp-admin/includes/plugin.php');
-		if(!is_plugin_active('advanced-custom-fields/acf.php') || !is_plugin_active('custom-post-template/custom-post-templates.php')){
+		if(!is_plugin_active('advanced-custom-fields/acf.php') && !is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) || !is_plugin_active('custom-post-template/custom-post-templates.php')){
 			add_action( 'admin_notices', array(&$this,'activate_error_notice') );
 			deactivate_plugins('acf-cpt-template/index.php');
 		} //is_plugin_active
